@@ -41,14 +41,14 @@ public class Experiment : SeeSharp.Experiments.Experiment {
             MaximumRenderTimeMs = maxTime,
             NumShadowRays = 1,
             SpatialSettings = new KdTreeSettings() { KnnLookup = true },
-            DirectionalSettings = new DQTDirectionalSettings() { UseVarAware = false }
+            DirectionalSettings = new DQTDirectionalSettings() { SampleMetric = DQTSampleMetric.Mean }
         }),
         new("GuidedVaPPG", new GuidedPathTracer() {
             TotalSpp = numSamples,
             MaximumRenderTimeMs = maxTime,
             NumShadowRays = 1,
             SpatialSettings = new KdTreeSettings() { KnnLookup = true },
-            DirectionalSettings = new DQTDirectionalSettings() { UseVarAware = true }
+            DirectionalSettings = new DQTDirectionalSettings() { SampleMetric = DQTSampleMetric.SecondMoment }
         }),
     };
 }

@@ -83,13 +83,18 @@ internal static partial class OpenPGL {
         SECOND_MOMENT
     };
 
+    public enum PGLDQTSampleMetric {
+        MEAN = 0,
+        SECOND_MOMENT
+    };
+
     [StructLayout(LayoutKind.Sequential)]
     public struct PGLDQTFactoryArguments {
         public PGLDQTLeafEstimator leafEstimator;
         public PGLDQTSplitMetric splitMetric;
+        public PGLDQTSampleMetric sampleMetric;
         public float splitThreshold;
         public float footprintFactor;
-        [MarshalAs(UnmanagedType.I1)] public bool useVarAware;
         public UInt32 maxLevels;
     };
 
@@ -234,12 +239,17 @@ public enum DQTSplitMetric {
     SecondMoment
 };
 
+public enum DQTSampleMetric {
+    Mean = 0,
+    SecondMoment
+};
+
 public class DQTDirectionalSettings : DirectionalSettings {
     public DQTLeafEstimator LeafEstimator = DQTLeafEstimator.RejectionSampling;
     public DQTSplitMetric SplitMetric = DQTSplitMetric.Mean;
+    public DQTSampleMetric SampleMetric = DQTSampleMetric.Mean;
     public float SplitThreshold = 0.01f;
     public float FootprintFactor = 1;
-    public bool UseVarAware = false;
     public int MaxLevels = 12;
 
     internal override OpenPGL.PGL_DIRECTIONAL_DISTRIBUTION_TYPE DistType
@@ -251,9 +261,9 @@ public class DQTDirectionalSettings : DirectionalSettings {
         OpenPGL.PGLDQTFactoryArguments args = new() {
             leafEstimator = (OpenPGL.PGLDQTLeafEstimator) LeafEstimator,
             splitMetric = (OpenPGL.PGLDQTSplitMetric) SplitMetric,
+            sampleMetric = (OpenPGL.PGLDQTSampleMetric) SampleMetric,
             splitThreshold = SplitThreshold,
             footprintFactor = FootprintFactor,
-            useVarAware = UseVarAware,
             maxLevels = (uint)int.Max(0, MaxLevels),
         };
         Marshal.StructureToPtr(args, target.directionalDistributionArguments, true);
