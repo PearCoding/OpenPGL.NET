@@ -35,6 +35,20 @@ public class Experiment : SeeSharp.Experiments.Experiment {
         new("Vcm", new VertexConnectionAndMerging() {
            NumIterations = numSamples / 2,
            MaximumRenderTimeMs = maxTime,
-        })
+        }),
+        new("GuidedPPG", new GuidedPathTracer() {
+            TotalSpp = numSamples,
+            MaximumRenderTimeMs = maxTime,
+            NumShadowRays = 1,
+            SpatialSettings = new KdTreeSettings() { KnnLookup = true },
+            DirectionalSettings = new DQTDirectionalSettings() { UseVarAware = false }
+        }),
+        new("GuidedVaPPG", new GuidedPathTracer() {
+            TotalSpp = numSamples,
+            MaximumRenderTimeMs = maxTime,
+            NumShadowRays = 1,
+            SpatialSettings = new KdTreeSettings() { KnnLookup = true },
+            DirectionalSettings = new DQTDirectionalSettings() { UseVarAware = true }
+        }),
     };
 }

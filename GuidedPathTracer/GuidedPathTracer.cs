@@ -22,6 +22,7 @@ public class GuidedPathTracer : PathLenLoggingPathTracer {
     ThreadLocal<SurfaceSamplingDistribution> distributionBuffer;
 
     public SpatialSettings SpatialSettings = new KdTreeSettings() { KnnLookup = true };
+    public DirectionalSettings DirectionalSettings = new VMMDirectionalSettings();
 
     public Field GuidingField;
     public bool GuidingEnabled { get; private set; }
@@ -47,8 +48,10 @@ public class GuidedPathTracer : PathLenLoggingPathTracer {
     }
 
     protected override void OnPrepareRender() {
-        GuidingField = new(new FieldSettings() {
-            SpatialSettings = SpatialSettings
+        GuidingField = new(new FieldSettings()
+        {
+            SpatialSettings = SpatialSettings,
+            DirectionalSettings = DirectionalSettings
         });
         GuidingField.SceneBounds = new() {
             Lower = scene.Bounds.Min - scene.Bounds.Diagonal * 0.01f,

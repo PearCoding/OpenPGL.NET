@@ -89,6 +89,7 @@ internal static partial class OpenPGL {
         public PGLDQTSplitMetric splitMetric;
         public float splitThreshold;
         public float footprintFactor;
+        [MarshalAs(UnmanagedType.I1)] public bool useVarAware;
         public UInt32 maxLevels;
     };
 
@@ -238,6 +239,7 @@ public class DQTDirectionalSettings : DirectionalSettings {
     public DQTSplitMetric SplitMetric = DQTSplitMetric.Mean;
     public float SplitThreshold = 0.01f;
     public float FootprintFactor = 1;
+    public bool UseVarAware = false;
     public int MaxLevels = 12;
 
     internal override OpenPGL.PGL_DIRECTIONAL_DISTRIBUTION_TYPE DistType
@@ -251,6 +253,7 @@ public class DQTDirectionalSettings : DirectionalSettings {
             splitMetric = (OpenPGL.PGLDQTSplitMetric) SplitMetric,
             splitThreshold = SplitThreshold,
             footprintFactor = FootprintFactor,
+            useVarAware = UseVarAware,
             maxLevels = (uint)int.Max(0, MaxLevels),
         };
         Marshal.StructureToPtr(args, target.directionalDistributionArguments, true);

@@ -83,10 +83,12 @@ namespace Viewer.Components {
                 Scene.FrameBuffer = new(640, 480, "");
                 Scene.Prepare();
 
-                integrator = new() {
+                integrator = new()
+                {
                     TotalSpp = Setup.NumSamples,
                     MaxDepth = Setup.MaxDepth,
-                    SpatialSettings = new KdTreeSettings() { KnnLookup = false }
+                    SpatialSettings = new KdTreeSettings() { KnnLookup = false },
+                    
                 };
 
                 integrator.Render(Scene);
