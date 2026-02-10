@@ -88,7 +88,8 @@ namespace Viewer.Components {
                     TotalSpp = Setup.NumSamples,
                     MaxDepth = Setup.MaxDepth,
                     SpatialSettings = new KdTreeSettings() { KnnLookup = false },
-                    
+                    DirectionalSettings = new DQTDirectionalSettings { SampleMetric = DQTSampleMetric.SecondMoment },
+                    NumShadowRays=0
                 };
 
                 integrator.Render(Scene);
@@ -112,9 +113,9 @@ namespace Viewer.Components {
                         row / (float)resolution * MathF.PI
                     );
                     Vector3 dir = SampleWarp.SphericalToCartesian(sphericalDir);
-                    dir = ShadingSpace.ShadingToWorld(upVector, dir);
+                    // dir = ShadingSpace.ShadingToWorld(upVector, dir);
 
-                    float pdf = distribution.PDF(dir) * MathF.Sin(sphericalDir.Y);
+                    float pdf = distribution.PDF(dir); //* MathF.Sin(sphericalDir.Y);
                     image.SetPixel(col, row, new(pdf, pdf, pdf));
                 }
             }

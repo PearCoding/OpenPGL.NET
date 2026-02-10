@@ -261,8 +261,17 @@ public class GuidedPathTracer : PathLenLoggingPathTracer {
         // Generate the samples and add them to the global cache
         uint num = pathStorage.Value.PrepareSamples(
             useNEEMiWeights: false,
-            guideDirectLight: false,
+            guideDirectLight: true,
             rrAffectsDirectContribution: true);
+
+        if (DirectionalSettings is DQTDirectionalSettings settings)
+        {
+            if (settings.SampleMetric == DQTSampleMetric.SecondMoment)
+            {
+                for (int i = 0; i < num; ++i)
+                    pathStorage.Value.Samples[i].Weight *= pathStorage.Value.Samples[i].Weight;
+            }
+        }
         sampleStorage.AddSamples(pathStorage.Value.SamplesRawPointer, num);
     }
 }

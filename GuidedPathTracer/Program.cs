@@ -11,6 +11,7 @@ Benchmark benchmark = new(new GuidedPathTracer.Experiment(128, int.MaxValue), [
     // SceneRegistry.LoadScene("CountryKitchen"),
     // SceneRegistry.LoadScene("ModernLivingRoom", maxDepth: 10),
     // SceneRegistry.LoadScene("Pool", maxDepth: 5),
-    SceneRegistry.LoadScene("CornellBox", maxDepth: 5),
+    // SceneRegistry.LoadScene("CornellBox", maxDepth: 5),
+    SceneRegistry.LoadScene("VarAwareTwoPlanes", maxDepth: 5),
 ], "Results", 640, 480, SeeSharp.Images.FrameBuffer.Flags.SendToTev);
 benchmark.Run(skipReference: false);
